@@ -4,6 +4,7 @@ Availability Calendar is a Bootstrap/PHP calendar to show availability.
 
 You can manage the availability via an admin panel.
 
+![image](https://pir-d.com/assets/img/Calendar.png)
 
 ## Dependencies
 ### Bootstrap
