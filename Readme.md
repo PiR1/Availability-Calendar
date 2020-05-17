@@ -36,7 +36,7 @@ It will create a default admin user.
 Default username: `admin`  
 Default password: `admin` 
 
-To change the avalaibility of a day, go to the admin panel, log in with your credentials and just click on a date to change its state.
+To change the availability of a day, go to the admin panel, log in with your credentials and just click on a date to change its state.
 
 
 ## Get Started
@@ -49,6 +49,14 @@ You also need to include:
 ```html
 <script src="assets/js/dateParse.js"></script>
 <script src="assets/js/calendar.js"></script>
+```
+
+If the Calendar folder is not the same as your page, define the variable `url_ajax_event`  
+For example if you're in the root and your Calendar folder is Calendar, add this:
+```html
+<script>
+    var url_ajax_event = "Calendar/";
+</script>
 ```
 
 Put the class `calendar` where you want to have your Calendar
