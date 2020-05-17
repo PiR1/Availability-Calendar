@@ -1,5 +1,5 @@
-Availability Calendar
-=====
+# Availability Calendar
+
 Availability Calendar is a Bootstrap/PHP calendar to show availability.
 
 You can manage the availability via an admin panel.
