@@ -64,4 +64,6 @@ Put the class `calendar` where you want to have your Calendar
 <div class="calendar"></div>
 ```
 
+# ToDo
+Communicate with other ics Calendar (e.g: AirBNB, HomeAway,...)
 
