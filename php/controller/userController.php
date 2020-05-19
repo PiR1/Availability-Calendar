@@ -11,6 +11,7 @@ class userController extends controller
     }
 
     /**
+     * Login
      * @param $data
      * @throws Exception
      */
@@ -47,6 +48,7 @@ class userController extends controller
     }
 
     /**
+     * Sign Up
      * @param $data
      * @throws Exception
      */
@@ -84,6 +86,7 @@ class userController extends controller
     }
 
     /**
+     * Change password
      * @param $data
      * @throws Exception
      */
@@ -128,6 +131,7 @@ class userController extends controller
     }
 
     /**
+     * Get user by username
      * @param $username
      * @return mixed
      */

@@ -6,6 +6,12 @@ abstract class controller
     protected $connection;
     protected $tableName;
 
+    /**
+     * controller constructor.
+     * @param $connection
+     * @param $tableName
+     * @throws Exception
+     */
     public function __construct($connection, $tableName)
     {
         $this->connection = $connection;
@@ -13,6 +19,11 @@ abstract class controller
         $this->isTable($tableName);
     }
 
+    /**
+     * Check if $tbl exist in the database
+     * @param $tbl
+     * @throws Exception
+     */
     private function isTable($tbl)
     {
         $tables = array();
@@ -27,6 +38,10 @@ abstract class controller
         }
     }
 
+    /**
+     * Create tables
+     * @throws Exception
+     */
     private function createTable()
     {
         $query = "CREATE TABLE IF NOT EXISTS `events` (
@@ -57,6 +72,7 @@ abstract class controller
 
 
     /**
+     * Update an element in the db
      * @param integer $id
      * @param string $key
      * @param mixed $value
@@ -79,6 +95,7 @@ abstract class controller
     }
 
     /**
+     * Remove an element in the db
      * @param $id
      * @return mixed
      */
@@ -100,6 +117,7 @@ abstract class controller
 
 
     /**
+     * Prepare $value to be replaced in a query
      * @param $value
      * @return string
      */

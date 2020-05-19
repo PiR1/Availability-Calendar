@@ -8,6 +8,7 @@ class authController
     }
 
     /**
+     * Check if the user is auth
      * @return bool
      */
     public function checkAuth(){
@@ -25,6 +26,7 @@ class authController
     }
 
     /**
+     * Get username of the auth user
      * @return integer|null
      */
     public function getAuth(){
@@ -37,6 +39,7 @@ class authController
     }
 
     /**
+     * Create the session
      * @param User $user
      */
 
@@ -45,6 +48,9 @@ class authController
         $_SESSION["username"] = $user->getUsername();
     }
 
+    /**
+     * Delete the session
+     */
     public function deleteAuth(){
         if(!isset($_SESSION)) { session_start(); }
         $_SESSION["username"]="";

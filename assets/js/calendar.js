@@ -1,7 +1,7 @@
-var today = new Date();
-var currentMonth = today.getMonth();
-var currentYear = today.getFullYear();
-var months = [
+const today = new Date();
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
+const months = [
     "Janvier",
     "Février",
     "Mars",

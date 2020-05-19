@@ -29,4 +29,3 @@ class DBClass {
         return $this->connection;
     }
 }
-?>

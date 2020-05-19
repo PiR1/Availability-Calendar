@@ -1,7 +1,7 @@
-$("form").submit(function (event) {
+$("form").on("submit", function (event) {
     // Stop form from submitting normally
     event.preventDefault();
-    var btn =$(this).find(".btn")
+    const btn = $(this).find(".btn");
     buttonLoad(btn);
 
     $.ajax({
@@ -14,7 +14,7 @@ $("form").submit(function (event) {
         window.location.replace("index.php");
     })
         .fail(function (jqXHR) {
-            alert(jqXHR.responseJSON["message"], false);
+            alert(jqXHR.responseJSON["message"]);
             console.error(jqXHR.responseText);
             buttonLoad(btn);
     });
@@ -38,7 +38,7 @@ const serialize_form = form => JSON.stringify(
 );
 
 function buttonLoad(btn){
-    var loadingText = '<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>';
+    const loadingText = '<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>';
     if (btn.html() !== loadingText) {
         btn.data('original-text', btn.html());
         btn.html(loadingText);

@@ -75,10 +75,9 @@ class User
      * @return array
      */
     public function toArray(){
-        $user = array(
+        return array(
             "username" => $this->username,
             "password" => $this->password,
         );
-        return $user;
     }
 }

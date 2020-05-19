@@ -7,12 +7,10 @@ class Event
     private $start;
     private $end;
     private $description;
+    private $table_name;
 
     /**
      * Event constructor.
-     * @param $connection
-     * @param string $table_name
-     * @param $id
      * @param $start
      * @param $end
      * @param $description
@@ -32,12 +30,11 @@ class Event
      * @return array
      */
     public function toArray(){
-        $event = array(
+        return array(
             "start" => $this->start,
             "end" => $this->end,
             "description" => $this->description
         );
-        return $event;
     }
 
 
