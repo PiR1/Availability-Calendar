@@ -6,6 +6,8 @@ You can manage the availability via an admin panel.
 
 ![image](https://pir-d.com/assets/img/Calendar.png)
 
+## /!\ Under development but the mentioned functionalities are functional
+
 ## Dependencies
 ### Bootstrap
 `<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">`
