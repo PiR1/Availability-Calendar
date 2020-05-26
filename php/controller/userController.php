@@ -1,13 +1,27 @@
 <?php
+/**
+ * Copyright (C) PiR1, Inc - All Rights Reserved
+ *    Apache License
+ *    Version 2.0, January 2004
+ *    http://www.apache.org/licenses/
+ *    See Licence file
+ *
+ * @file      userController.php
+ * @author    PiR1
+ * @date     25/05/2020 23:25
+ */
 
-include "model/user.php";
+namespace Calendar\controller;
+
+use Exception;
+use Calendar\model\User;
 
 class userController extends controller
 {
 
     public function __construct($connection)
     {
-        parent::__construct($connection, "users");
+        parent::__construct($connection, "users", "\Calendar\model\User");
     }
 
     /**
@@ -29,10 +43,9 @@ class userController extends controller
 
             // execute query
             if ($stmt->execute()) {
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                if (password_verify($data->password, $row["password"])) {
-                    $user = new User($data->username, $row["password"]);
-                    (new authController)->setAuth($user);
+                $usr = $this->toModel($stmt);
+                if (password_verify($data->password, $usr->getPassword())) {
+                    (new authController)->setAuth($usr);
                     http_response_code(201);
                     // tell the user
                     echo json_encode(array("message" => "Event was created."));
@@ -102,10 +115,11 @@ class userController extends controller
 
                 $stmt = $this->getByUsername($user);
                 if ($stmt->execute()) {
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($row["username"]==$user){
-                        if (password_verify($data->oldPassword, $row["password"])) {
-                            if ($this->update($row["id"], "password", password_hash($data->password, PASSWORD_DEFAULT))) {
+                    /** @var User $usr */
+                    $usr=$this->toModel($stmt);
+                    if ($usr->getUsername()==$user){
+                        if (password_verify($data->oldPassword,$usr->getPassword())) {
+                            if ($this->update($usr->getId(), "password", password_hash($data->password, PASSWORD_DEFAULT))) {
                                 http_response_code(200); //Success
                                 echo json_encode(array("message" => "Password changed"));
                             } else {

@@ -1,4 +1,22 @@
 <?php
+/**
+ * Copyright (C) PiR1, Inc - All Rights Reserved
+ *    Apache License
+ *    Version 2.0, January 2004
+ *    http://www.apache.org/licenses/
+ *    See Licence file
+ *
+ * @file      dbclass.php
+ * @author    PiR1
+ * @date     25/05/2020 23:25
+ */
+
+namespace Calendar\config;
+
+use \PDO;
+use Exception;
+use PDOException;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);

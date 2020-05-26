@@ -1,4 +1,17 @@
 <?php
+/**
+ * Copyright (C) PiR1, Inc - All Rights Reserved
+ *    Apache License
+ *    Version 2.0, January 2004
+ *    http://www.apache.org/licenses/
+ *    See Licence file
+ *
+ * @file      event.php
+ * @author    PiR1
+ * @date     25/05/2020 23:25
+ */
+
+namespace Calendar\model;
 class Event
 {
 
@@ -7,26 +20,38 @@ class Event
     private $start;
     private $end;
     private $description;
-    private $table_name;
+    private $uid;
+    private $idCal;
+
 
     /**
      * Event constructor.
+     */
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * Event creator.
      * @param $start
      * @param $end
      * @param $description
+     * @return Event
      */
-    public function __construct($start, $end, $description)
+    public static function create($start, $end, $description)
     {
-        $this->table_name = "events";
-        $this->start = $start;
-        $this->end = $end;
-        $this->description = $description;
+        $self = new self();
+        $self->start = $start;
+        $self->end = $end;
+        $self->description = $description;
+        return $self;
     }
 
 
+
     /**
-     * Transform user attributes to array 
-     *
+     * Transform user attributes to array
      * @return array
      */
     public function toArray(){
@@ -89,6 +114,40 @@ class Event
     /**
      * @return mixed
      */
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
+    /**
+     * @param mixed $uid
+     */
+    public function setUid($uid): void
+    {
+        $this->uid = $uid;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getIdCal()
+    {
+        return $this->idCal;
+    }
+
+    /**
+     * @param mixed $idCal
+     */
+    public function setIdCal($idCal)
+    {
+        $this->idCal = $idCal;
+    }
+    
+
+    /**
+     * @return mixed
+     */
     public function getDescription()
     {
         return $this->description;
@@ -101,4 +160,7 @@ class Event
     {
         $this->description = $description;
     }
+
+
+
 }

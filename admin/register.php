@@ -1,4 +1,16 @@
 <?php
+/**
+ * Copyright (C) PiR1, Inc - All Rights Reserved
+ *    Apache License
+ *    Version 2.0, January 2004
+ *    http://www.apache.org/licenses/
+ *    See Licence file
+ *
+ * @file      register.php
+ * @author    PiR1
+ * @date     25/05/2020 23:25
+ */
+
 include "../php/controller/authController.php";
 if (!(new authController())->checkAuth()){
     header ('Location: login.php');

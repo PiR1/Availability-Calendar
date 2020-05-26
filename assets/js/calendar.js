@@ -1,3 +1,15 @@
+/*
+ * Copyright (C) PiR1, Inc - All Rights Reserved
+ *    Apache License
+ *    Version 2.0, January 2004
+ *    http://www.apache.org/licenses/
+ *    See Licence file
+ *
+ * @file      calendar.js
+ * @author    PiR1
+ * @date     25/05/2020 23:25
+ */
+
 const today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();

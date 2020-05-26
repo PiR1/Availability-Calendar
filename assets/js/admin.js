@@ -1,3 +1,15 @@
+/*
+ * Copyright (C) PiR1, Inc - All Rights Reserved
+ *    Apache License
+ *    Version 2.0, January 2004
+ *    http://www.apache.org/licenses/
+ *    See Licence file
+ *
+ * @file      admin.js
+ * @author    PiR1
+ * @date     25/05/2020 23:25
+ */
+
 const today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
@@ -36,7 +48,67 @@ function jump() {
     currentMonth = parseInt(selectMonth.value);
     showCalendar(currentMonth, currentYear);
 }
+function icalsForm() {
+    $("#icals form").on("submit", function(event){
+        event.preventDefault();
+        const btn = $(this).find(".btn");
+        buttonLoad(btn);
+        if($(this).find("#url").val().endsWith(".ics")){
+        data={"id": $(this).find(".btn").attr("data-id"),
+            "url":$(this).find("#url").val(),
+            "type":$(this).find("#desc").val() };
 
+
+        $.ajax({
+            method: "POST",
+            url: url_ajax_event+"php/ical/update",
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            dataType:'json'
+        }).done(function (data) {
+            showAlert("success", data.message);
+            buttonLoad(btn);
+            if(data.id){
+                btn.attr("data-id", data.id);
+            }
+        }).fail(function (jqXHR) {
+            alert(jqXHR.responseJSON["message"]);
+            console.error(jqXHR.responseText);
+            buttonLoad(btn);
+        });
+        }
+        else
+        {
+            buttonLoad(btn);
+            showAlert("danger", "The ical url must ends with '.ics'");
+        }
+    })
+    $(".btn-danger").on("click", function(event){
+        event.preventDefault();
+        const elt = $(this);
+        const btn = $(this).find(".btn");
+        buttonLoad(btn);
+
+        $.ajax({
+            method: "POST",
+            url: url_ajax_event+"php/ical/delete",
+            data: $(this).attr("data-id"),
+            // contentType: 'application/json',
+            dataType:'json'
+        }).done(function (data) {
+            showAlert("success", data.message);
+            buttonLoad(btn);
+            // console.log($(this).parent("form"));
+            console.log(elt.closest("form"));
+            elt.closest("form").remove();
+        }).fail(function (jqXHR) {
+            alert(jqXHR.responseJSON["message"]);
+            console.error(jqXHR.responseText);
+            buttonLoad(btn);
+        });
+        // alert($(this).find(".btn").attr("data-id"));
+    })
+}
 function showCalendar(month, year) {
     loadEvents();
 
@@ -103,6 +175,7 @@ function showCalendar(month, year) {
                 dataType:'json'
             }).done(function(data){
                 console.log(data);
+                showAlert("success", data.message);
                 $(this).toggleClass('bg-danger');
             }).fail(function (jqXHR) {
                 console.error(jqXHR.responseText);
@@ -121,4 +194,51 @@ $('.calendar').load(url_ajax_event+'includes/calendar.html', function () {
     showCalendar(currentMonth, currentYear);
 });
 
+$.ajax({
+    method: "GET",
+    context:this,
+    url: url_ajax_event+"php/ical/getAll",
+    contentType: 'application/json',
+    dataType:'json'
+}).done(function(data){
+    let content="";
+    $.each(data, function(i, item){
+        content+="<form class='mt-4'>\n" +
+            "                <div class=\"row\">\n" +
+            "                <div class=\"col\">\n" +
+            "                    <input type=\"text\" class=\"form-control\" id=\"url\" value='"+item.url+"' placeholder=\"URL\">\n" +
+            "                </div>\n" +
+            "                <div class=\"col\">\n" +
+            "                    <input type=\"text\" class=\"form-control\" id=\"desc\" value='"+item.type+"' placeholder=\"Description\">\n" +
+            "                </div>\n" +
+            "                    <div class=\"col\">\n" +
+            "                <button type=\"submit\" data-id='"+item.id+"' class=\"btn btn-primary\"><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></button>\n" +
+            "                <button data-id='"+item.id+"' class='btn btn-danger'><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></button>\n"+
+            "                    </div>\n" +
+            "                </div><hr>\n" +
+            "            </form>";
+    })
+    $("#icals").append(content);
+    icalsForm();
+}).fail(function (jqXHR) {
+    console.error(jqXHR.responseText);
+})
+
+$("#addIcal").on("click", function(){
+    $("#icals").append("<form class='mt-4'>\n" +
+        "                <div class=\"row\">\n" +
+        "                <div class=\"col\">\n" +
+        "                    <input type=\"text\" class=\"form-control\" id=\"url\" placeholder=\"URL\">\n" +
+        "                </div>\n" +
+        "                <div class=\"col\">\n" +
+        "                    <input type=\"text\" class=\"form-control\" id=\"desc\"  placeholder=\"Description ex: airbnb, Abritel, ...\">\n" +
+        "                </div>\n" +
+        "                    <div class=\"col\">\n" +
+        "                <button type=\"submit\" class=\"btn btn-primary\"><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></button>\n" +
+        "                <button class='btn btn-danger'><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></button>\n"+
+        "                    </div>\n" +
+        "                </div><hr>\n" +
+        "            </form>");
+    icalsForm();
+})
 

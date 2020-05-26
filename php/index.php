@@ -1,4 +1,20 @@
 <?php
+/**
+ * Copyright (C) PiR1, Inc - All Rights Reserved
+ *    Apache License
+ *    Version 2.0, January 2004
+ *    http://www.apache.org/licenses/
+ *    See Licence file
+ *
+ * @file      index.php
+ * @author    PiR1
+ * @date     25/05/2020 23:25
+ */
+
+namespace Calendar;
+require __DIR__.'/Autoloader.php';
+use Calendar\Autoloader;
+Autoloader::register();
 // Set the header
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -7,11 +23,14 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // get database connection
-include_once 'config/dbclass.php';
+use Calendar\config\DBClass;
 // get objects classes
-include_once 'controller/eventController.php';
-include_once 'controller/userController.php';
-include_once 'controller/authController.php';
+use Calendar\controller\eventController;
+use Calendar\controller\icsController;
+use Calendar\controller\userController;
+use Calendar\controller\authController;
+use Exception;
+
 
 // get request uri
 if (!isset($_SESSION)) {
@@ -130,6 +149,52 @@ try {
                 }
                 break;
 
+            case 'ical':
+                if (isset($uri[3])) {
+                    $database = new DBClass();
+                    $db = $database->getConnection();
+                    $icalCtrl = new icsController($db);
+                    switch ($uri[3]) {
+                        case 'Calendar.ics':
+                            $icalCtrl->mysqlToIcs();
+                            break;
+                        case 'getAll':
+                            if ($auth->checkAuth()) {
+                                $icalCtrl->getAll();
+                            } else {
+                                throw new Exception("Unauthorized.", 401);
+                            }
+                            break;
+
+                        case 'update':
+                            if ($auth->checkAuth()) {
+                                $icalCtrl->updateIcal($data);
+                            } else {
+                                throw new Exception("Unauthorized.", 401);
+                            }
+                            break;
+
+                        case 'updateCal':
+                                $icalCtrl->icsToMysql();
+                            break;
+
+                        case 'delete':
+                            if ($auth->checkAuth()) {
+                                $icalCtrl->delete($data);
+
+                            } else {
+                                throw new Exception("Unauthorized.", 401);
+                            }
+                            break;
+
+                        default:
+                            throw new Exception("Unsupported request.", 501);
+                            break;
+                    }
+                } else {
+                    throw new Exception("Bad request.", 501);
+                }
+                break;
 
             default:
                 throw new Exception("Unsupported request.", 501);

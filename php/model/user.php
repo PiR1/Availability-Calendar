@@ -1,5 +1,17 @@
 <?php
+/**
+ * Copyright (C) PiR1, Inc - All Rights Reserved
+ *    Apache License
+ *    Version 2.0, January 2004
+ *    http://www.apache.org/licenses/
+ *    See Licence file
+ *
+ * @file      user.php
+ * @author    PiR1
+ * @date     25/05/2020 23:25
+ */
 
+namespace Calendar\model;
 
 class User
 {
@@ -10,14 +22,24 @@ class User
     private $password;
 
     /**
-     * user constructor.
+     * User constructor.
+     */
+    public function __construct(){
+
+    }
+
+    /**
+     * User creator.
      * @param $username
      * @param $password
+     * @return User
      */
-    public function __construct($username, $password)
+    public static function create($username, $password)
     {
-        $this->username = $username;
-        $this->password = $password;
+        $self = new self();
+        $self->username = $username;
+        $self->password = $password;
+        return $self;
     }
 
     /**

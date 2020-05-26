@@ -1,6 +1,6 @@
 # Availability Calendar
 
-Availability Calendar is a Bootstrap/PHP calendar to show availability.
+Availability Calendar is a Bootstrap/PHP calendar to show availability and synchronise with other iCalendar (e.g. AirBNB, HomeAway, ...)
 
 You can manage the availability via an admin panel.
 
@@ -39,6 +39,9 @@ Default username: `admin`
 Default password: `admin` 
 
 To change the availability of a day, go to the admin panel, log in with your credentials and just click on a date to change its state.
+On the right side of the panel you can change the links of the calendars you want to synchronize with.
+
+The link to your calendar is: /php/ical/Calendar.ics 
 
 
 ## Get Started
@@ -65,7 +68,4 @@ Put the class `calendar` where you want to have your Calendar
 ```html
 <div class="calendar"></div>
 ```
-
-# ToDo
-Communicate with other ics Calendar (e.g: AirBNB, HomeAway,...)
 
