@@ -178,6 +178,7 @@ function showCalendar(month, year) {
                 showAlert("success", data.message);
                 $(this).toggleClass('bg-danger');
             }).fail(function (jqXHR) {
+                showAlert("danger", jqXHR.responseJSON["message"]);
                 console.error(jqXHR.responseText);
             })
         }
