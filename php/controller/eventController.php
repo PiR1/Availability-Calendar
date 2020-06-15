@@ -120,7 +120,7 @@ class eventController extends controller
 
         $stmt->execute();
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetchAll(PDO::FETCH_CLASS,$this->model);
         $yesterday = clone $date;
         $yesterday->modify("-1 day");
         $tomorrow = clone $date;
@@ -128,19 +128,23 @@ class eventController extends controller
 
         // if date is in an event
         if ($stmt->rowCount() > 0) {
-            if ($row["start"] == $row["end"]) {
-                $this->remove($row["id"]);
+            $row = $row[0];
+            if ($row->getStart() == $row->getEnd()) {
+                $this->remove($row->getId());
                 http_response_code(200); //Success
                 echo json_encode(array("message" => "Event deleted"));
-            } else if ($row["end"] == $date->format("Y-m-d")) {
-                $msg = $this->create(Event::create($row["start"],$yesterday->format("Y-m-d"), $row["description"]));
-            } else if ($row["start"] == $date->format("Y-m-d")) {
-                $msg = $this->create(Event::create($tomorrow->format("Y-m-d"), $row["end"],  $row["description"]));
-                $this->remove($row["id"]);
-            } else {
-                // devide the event in 2 events
-                $msg = $this->create(Event::create( $row["start"],  $yesterday->format("Y-m-d"), $row["description"] ));
-                $this->create(Event::create($tomorrow->format("Y-m-d"),  $row["end"],  $row["description"]));
+            } else if ($row->getIdCal() == 0){
+                 if ($row->getStart() == $date->format("Y-m-d")) {
+                    $msg = $this->create(Event::create($tomorrow->format("Y-m-d"), $row->getEnd(),  $row->getDescription()));
+                    $this->remove($row->getId());
+                } else {
+                    // devide the event in 2 events
+                    $msg = $this->create(Event::create($row->getStart(),  $yesterday->format("Y-m-d"), $row->getDescription() ));
+                    $this->create(Event::create($tomorrow->format("Y-m-d"),  $row->getEnd(),  $row->getDescription()));
+                }
+            } else{
+                http_response_code(500); //Success
+                echo json_encode(array("message" => "A distant event already exists"));
             }
 
         } else {
@@ -160,11 +164,11 @@ class eventController extends controller
                     $startDate = [];
                     $endDate = [];
                     $desc = [];
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        array_push($ids, $row["id"]);
-                        array_push($startDate, $row["start"]);
-                        array_push($endDate, $row["end"]);
-                        array_push($desc, $row["description"]);
+                    foreach ($stmt->fetchAll(PDO::FETCH_CLASS,$this->model) as $row) {
+                        array_push($ids, $row->getId());
+                        array_push($startDate, $row->getStart());
+                        array_push($endDate, $row->getEnd());
+                        array_push($desc, $row->getDescription());
                     }
                     $start = min($startDate);
                     $idx = array_search($start, $startDate);
@@ -173,17 +177,20 @@ class eventController extends controller
                     $msg = $this->create(Event::create($start,  $end,  $desc[$idx]));
                     $this->remove($ids[count($ids) - 1 - $idx]);
                 } else {
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $row = $stmt->fetchAll(PDO::FETCH_CLASS,$this->model)[0];
+                    if($row->getIdCal()!=0){
+                        $msg = $this->create(Event::create($date->format("Y-m-d"), $date->format("Y-m-d"), "WebSite"));
+                    }
                     //if date just before event
-                    if ($row["start"] == $tomorrow->format("Y-m-d")) {
+                    else if ($row->getStart() == $tomorrow->format("Y-m-d")) {
                         //set start date to date
-                        $msg = $this->create(Event::create($date->format("Y-m-d"), $row["end"], $row["description"]));
-                        $this->remove($row["id"]);
+                        $msg = $this->create(Event::create($date->format("Y-m-d"), $row->getEnd(), $row->getDescription()));
+                        $this->remove($row->getId());
                     } else
                         // if date just after an event
-                        if ($row["end"] == $yesterday->format("Y-m-d")) {
+                        if ($row->getEnd() == $yesterday->format("Y-m-d")) {
                             //extends event to this date
-                            $msg = $this->create(Event::create($row["start"], $date->format("Y-m-d"),  $row["description"]));
+                            $msg = $this->create(Event::create($row->getStart(), $date->format("Y-m-d"),  $row->getDescription()));
                         }
                 }
             } else {
