@@ -6,7 +6,7 @@
  *    http://www.apache.org/licenses/
  *    See Licence file
  *
- * @file      user.php
+ * @file      User.php
  * @author    PiR1
  * @date     25/05/2020 23:25
  */

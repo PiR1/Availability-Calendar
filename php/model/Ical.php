@@ -6,14 +6,14 @@
  *    http://www.apache.org/licenses/
  *    See Licence file
  *
- * @file      ical.php
+ * @file      Ical.php
  * @author    PiR1
  * @date     25/05/2020 23:25
  */
 
 namespace Calendar\model;
 
-class ical
+class Ical
 {
 
     /**
@@ -40,7 +40,7 @@ class ical
      * ical creator.
      * @param $url
      * @param $type
-     * @return ical
+     * @return Ical
      */
     public static function create($url, $type)
     {
