@@ -30,7 +30,7 @@ class icsController extends controller
      */
     public function __construct($connection)
     {
-        parent::__construct($connection, "ics", "\Calendar\model\ical");
+        parent::__construct($connection, "ics", "\Calendar\model\Ical");
     }
 
 
@@ -195,8 +195,8 @@ class icsController extends controller
 
             # Change TimeZone if needed
             $ics_data .= "BEGIN:VEVENT\r\n";
-            $ics_data .= "DTSTART:" . $start_date . "T" . $start_time . "\r\n";
-            $ics_data .= "DTEND:" . $end_date . "T" . $end_time . "\r\n";
+            $ics_data .= "DTSTART;VALUE=DATE:" . $start_date . "\r\n";
+            $ics_data .= "DTEND;VALUE=DATE:" . $end_date . "\r\n";
             $ics_data .= "DTSTAMP:" . date('Ymd') . "T" . date('His') . "Z\r\n";
             //$ics_data .= "LOCATION:" . $location . "\r\n";
             //$ics_data .= "DESCRIPTION:" . $description . "\r\n";
