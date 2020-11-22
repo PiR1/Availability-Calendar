@@ -128,6 +128,7 @@ function showCalendar(month, year) {
     // selectYear.value = year;
     // selectMonth.value = month;
 
+
     // creating all cells
     let date = 1;
     for (let i = 0; i < 6; i++) {
@@ -177,7 +178,6 @@ function showCalendar(month, year) {
                 contentType: 'application/json',
                 dataType:'json'
             }).done(function(data){
-                console.log(data);
                 showAlert("success", data.message);
                 $(this).toggleClass('bg-danger');
             }).fail(function (jqXHR) {
@@ -250,7 +250,8 @@ $("#addIcal").on("click", function(){
 $("#fetchIcal").on("click", function(){
     $.get({
         url:url_ajax_event+"api/ical/updateCal",
-    }).done(function () {
+    }).done(function (data) {
         showCalendar(currentMonth, currentYear);
+        showAlert("success", data.message);
     })
 })
