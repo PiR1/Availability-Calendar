@@ -39,24 +39,22 @@ if (!isset($_SESSION)) {
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 $_SESSION["path"] = implode("/", array_slice($uri, 0, array_search("php", $uri))) . "/";
-// $uri = array_slice($uri, array_search("php",$uri)+1);
-$uri = array_slice($uri, array_search("Availability-Calendar", $uri));
+$uri = array_slice($uri, array_search("php", $uri));
 // decode ths json data
 $data = json_decode(file_get_contents("php://input"));
 $requestMethod = $_SERVER["REQUEST_METHOD"];
-// var_dump($uri);
 
 $auth = new authController();
 
 try {
-    if (isset($uri[2])) {
-        switch ($uri[2]) {
+    if (isset($uri[1])) {
+        switch ($uri[1]) {
             case 'event':
-                if (isset($uri[3])) {
+                if (isset($uri[2])) {
                     $database = new DBClass();
                     $db = $database->getConnection();
                     $event = new eventController($db);
-                    switch ($uri[3]) {
+                    switch ($uri[2]) {
                         case 'create':
                             if ($auth->checkAuth()) {
                                 $msg = $event->create($data);
@@ -82,18 +80,17 @@ try {
 
                         default:
                             throw new Exception("Unsupported request.", 501);
-                            break;
                     }
                 } else {
                     throw new Exception("Bad request.", 501);
                 }
                 break;
             case 'user':
-                if (isset($uri[3])) {
+                if (isset($uri[2])) {
                     $database = new DBClass();
                     $db = $database->getConnection();
                     $user = new userController($db);
-                    switch ($uri[3]) {
+                    switch ($uri[2]) {
                         case 'login':
                             $user->login($data);
                             break;
@@ -119,7 +116,6 @@ try {
 
                         default:
                             throw new Exception("Unsupported request.", 501);
-                            break;
                     }
                 } else {
                     throw new Exception("Bad request.", 501);
@@ -127,14 +123,13 @@ try {
                 break;
 
             case 'admin':
-                if (isset($uri[3])) {
+                if (isset($uri[2])) {
                     $database = new DBClass();
                     $db = $database->getConnection();
                     $user = new userController($db);
-                    switch ($uri[3]) {
+                    switch ($uri[2]) {
                         case 'login':
                             return "admin/login.php";
-                            break;
 
                         case 'signup':
                             $user->signUp($data);
@@ -142,7 +137,6 @@ try {
 
                         default:
                             throw new Exception("Unsupported request.", 501);
-                            break;
                     }
                 } else {
                     throw new Exception("Bad request.", 501);
@@ -150,11 +144,11 @@ try {
                 break;
 
             case 'ical':
-                if (isset($uri[3])) {
+                if (isset($uri[2])) {
                     $database = new DBClass();
                     $db = $database->getConnection();
                     $icalCtrl = new icsController($db);
-                    switch ($uri[3]) {
+                    switch ($uri[2]) {
                         case 'Calendar.ics':
                             $icalCtrl->mysqlToIcs();
                             break;
@@ -189,7 +183,6 @@ try {
 
                         default:
                             throw new Exception("Unsupported request.", 501);
-                            break;
                     }
                 } else {
                     throw new Exception("Bad request.", 501);
@@ -198,7 +191,6 @@ try {
 
             default:
                 throw new Exception("Unsupported request.", 501);
-                break;
         }
     } else {
         throw new Exception("Unsupported request.", 501);
