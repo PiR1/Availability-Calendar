@@ -40,7 +40,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 $_SESSION["path"] = implode("/", array_slice($uri, 0, array_search("php", $uri))) . "/";
 // $uri = array_slice($uri, array_search("php",$uri)+1);
-$uri = array_slice($uri, array_search("Calendar", $uri));
+$uri = array_slice($uri, array_search("Availability-Calendar", $uri));
 // decode ths json data
 $data = json_decode(file_get_contents("php://input"));
 $requestMethod = $_SERVER["REQUEST_METHOD"];

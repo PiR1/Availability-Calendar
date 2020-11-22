@@ -162,6 +162,9 @@ class icsController extends controller
                 $eventCtrl->remove($event->getId());
             }
         }
+        http_response_code(200);
+        // tell the user
+        echo json_encode(array("message"=>"Successfully updated."));
     }
 
     /**

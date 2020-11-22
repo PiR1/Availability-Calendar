@@ -29,7 +29,7 @@ if (!(new authController())->checkAuth()){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         [role=button] {
             cursor: pointer;
@@ -61,13 +61,18 @@ if (!(new authController())->checkAuth()){
     </div>
 </nav>
 <div id="alerts" class="fixed-top mt-4 px-4 container"></div>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6 col-sm-12 col-md-12"><div class="calendar py-4"></div></div>
-        <div class="col-lg-1 col-sm-1 col-md-1"></div>
-        <div class="col-lg-5 col-sm-12 col-md-12">
+        <div class="col-lg-6 col-sm-12 col-md-12 p-4 border-right"><div class="calendar"></div></div>
+        <div class="col-lg-6 col-sm-12 col-md-12">
             <h3 class="text-center">Icals links</h3>
-            <button type="button" id="addIcal" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button type="button" id="addIcal" class="btn btn-primary" title="Add an ical"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button type="button" id="fetchIcal" class="btn btn-primary" title="Sync ical"><i class="fas fa-sync"></i></button>
+            <div class="row mt-2">
+                <div class="col-5 pr-0">URL</div>
+                <div class="col-5 pl-0">Name</div>
+                <div class="col-2 p-0">Actions</div>
+            </div>
             <div id="icals"></div>
         </div>
 </div>
