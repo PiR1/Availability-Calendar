@@ -11,6 +11,8 @@
  * @date     25/05/2020 23:25
  */
 
+use Calendar\controller\authController;
+
 include "../api/controller/authController.php";
 if (!(new authController())->checkAuth()){
     header ('Location: login.php');

@@ -48,7 +48,7 @@ class userController extends controller
                     (new authController)->setAuth($usr);
                     http_response_code(201);
                     // tell the user
-                    echo json_encode(array("message" => "Event was created."));
+                    echo json_encode(array("message" => "Logged in"));
                 } else {
                     throw new Exception("Login failed", 401);
                 }
@@ -83,7 +83,6 @@ class userController extends controller
 
             // execute query
             if ($stmt->execute()) {
-                $this->login($data);
                 // set response code - 201 Created
                 http_response_code(201);
                 // tell the user
