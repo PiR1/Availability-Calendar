@@ -37,7 +37,7 @@ function  loadEvents() {
         url_ajax_event="";
     }
     $.get({
-        url:url_ajax_event+"php/event/getAll",
+        url:url_ajax_event+"api/event/getAll",
         async: false,
     }).done(function (data) {
         jsonStringDates = data;

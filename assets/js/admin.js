@@ -64,7 +64,7 @@ function icalsForm() {
 
             $.ajax({
                 method: "POST",
-                url: url_ajax_event + "php/ical/update",
+                url: url_ajax_event + "api/ical/update",
                 data: JSON.stringify(data),
                 contentType: 'application/json',
                 dataType: 'json'
@@ -92,7 +92,7 @@ function icalsForm() {
         if($(this).attr("data-id")){
             $.ajax({
                 method: "POST",
-                url: url_ajax_event+"php/ical/delete",
+                url: url_ajax_event+"api/ical/delete",
                 data: $(this).attr("data-id"),
                 dataType:'json'
             }).done(function (data) {
@@ -172,7 +172,7 @@ function showCalendar(month, year) {
             $.ajax({
                 method: "POST",
                 context:this,
-                url: url_ajax_event+"php/event/changeState",
+                url: url_ajax_event+"api/event/changeState",
                 data: JSON.stringify({"date":$(this).attr("data-date")}),
                 contentType: 'application/json',
                 dataType:'json'
@@ -201,7 +201,7 @@ $('.calendar').load(url_ajax_event+'includes/calendar.html', function () {
 $.ajax({
     method: "GET",
     context:this,
-    url: url_ajax_event+"php/ical/getAll",
+    url: url_ajax_event+"api/ical/getAll",
     contentType: 'application/json',
     dataType:'json'
 }).done(function(data){
@@ -249,7 +249,7 @@ $("#addIcal").on("click", function(){
 
 $("#fetchIcal").on("click", function(){
     $.get({
-        url:url_ajax_event+"php/ical/updateCal",
+        url:url_ajax_event+"api/ical/updateCal",
     }).done(function () {
         showCalendar(currentMonth, currentYear);
     })

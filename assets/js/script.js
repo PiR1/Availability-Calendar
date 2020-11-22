@@ -35,7 +35,7 @@ $("form").on("submit", function (event) {
 $("#logout").on("click", function () {
     $.ajax({
         method: "POST",
-        url: url_ajax_event+"php/user/logout",
+        url: url_ajax_event+"api/user/logout",
         contentType: "application/json"
     }).done(function (data) {
         window.location.replace("login.php");

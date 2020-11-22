@@ -11,7 +11,7 @@
  * @date     25/05/2020 23:25
  */
 
-require __DIR__.'/../php/Autoloader.php';
+require __DIR__ . '/../api/Autoloader.php';
 use Calendar\Autoloader;
 Autoloader::register();
 use Calendar\controller\authController;
