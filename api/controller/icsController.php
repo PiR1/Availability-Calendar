@@ -133,9 +133,10 @@ class icsController extends controller
 
     /**
      * Save ics event to the DB
+     * @param bool $show
      * @throws Exception
      */
-    public function icsToMysql(){
+    public function icsToMysql($show=true){
         $calendars = $this->fetchAll();
         $eventCtrl = new eventController((new DBClass())->getConnection());
         foreach ($calendars as $calendar) {
@@ -162,9 +163,11 @@ class icsController extends controller
                 $eventCtrl->remove($event->getId());
             }
         }
-        http_response_code(200);
-        // tell the user
-        echo json_encode(array("message"=>"Successfully updated."));
+        if($show){
+            http_response_code(200);
+            // tell the user
+            echo json_encode(array("message"=>"Successfully updated."));
+        }
     }
 
     /**
