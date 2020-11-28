@@ -17,9 +17,9 @@ class Event
 
     // table columns
     private $id;
-    public $start;
-    public $end;
-    public $description;
+    private $start;
+    private $end;
+    private $description;
     private $uid;
     private $idCal;
 

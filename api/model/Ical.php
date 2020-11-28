@@ -17,17 +17,17 @@ class Ical
 {
 
     /**
-     * @var integer
+     * @var int
      */
-    private $id;
+    private int $id;
     /**
      * @var string
      */
-    private $url;
+    private string $url;
     /**
      * @var string
      */
-    private $type;
+    private string $type;
 
     /**
      * ical constructor.
@@ -50,7 +50,6 @@ class Ical
         return $self;
     }
 
-
     /**
      * @return int
      */
@@ -58,6 +57,7 @@ class Ical
     {
         return $this->id;
     }
+
 
     /**
      * @param int $id
@@ -105,7 +105,7 @@ class Ical
         return "{\"id\":".$this->id.","."\"url\":\"".$this->url."\",\"type\":\"".$this->type."\"}";
     }
     public function toArray(){
-        return["id"=>$this->id, "url"=>$this->url, "type"=>$this->type];
+        return ["id"=>$this->id, "url"=>$this->url, "type"=>$this->type];
     }
 
 
